@@ -34,7 +34,7 @@ class Email {
   }
 }
 
-class Driver extends App {
+object Driver extends App {
   val timeStamp = new TimeStamp
   timeStamp.unapply("07-05-1998 12:00:00")
 
