@@ -87,12 +87,12 @@ class StudentReport {
 
 object StudentReport extends App {
   val stuReport = new StudentReport
-  stuReport.countNumberOfPassOrFail(2, 33, "fail")
-  stuReport.topOrBottomMarks(4, 5, "top")
-  stuReport.topOrBottomPercentage("bottom", 3)
-  stuReport.getScholarship(85, 2000, 500)
-  stuReport.getStudentsPassOrFail("fail", 40)
-  stuReport.getStudentsAbovePercentage(95)
-  stuReport.studentReportCard()
+  println(stuReport.countNumberOfPassOrFail(2, 33, "fail"))
+  println(stuReport.topOrBottomMarks(4, 5, "top"))
+  println(stuReport.topOrBottomPercentage("bottom", 3))
+  println(stuReport.getScholarship(85, 2000, 500))
+  println(stuReport.getStudentsPassOrFail("fail", 40))
+  println(stuReport.getStudentsAbovePercentage(95))
+  println(stuReport.studentReportCard())
 }
 

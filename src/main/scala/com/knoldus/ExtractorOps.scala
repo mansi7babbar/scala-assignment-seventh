@@ -36,14 +36,12 @@ class Email {
 
 object Driver extends App {
   val timeStamp = new TimeStamp
-  timeStamp.unapply("07-05-1998 12:00:00")
+  println(timeStamp.unapply("07-05-1998 12:00:00"))
 
   val url = new Url
-  url.apply("https", "aws.amazon.com", "/console/home", Map("state" -> "hash", "isauthcode" -> "true", "code" -> "112"))
-  url.unapply("https://aws.amazon.com/console/home?state=hash&isauthcode=true&code=112")
+  println(url.apply("https", "aws.amazon.com", "/console/home", Map("state" -> "hash", "isauthcode" -> "true", "code" -> "112")))
+  println(url.unapply("https://aws.amazon.com/console/home?state=hash&isauthcode=true&code=112"))
 
   val email = new Email
-  email.unapply("knol@knoldus.com")
+  println(email.unapply("knol@knoldus.com"))
 }
-
-

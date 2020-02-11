@@ -67,12 +67,12 @@ class ListOps {
 
 object ListOps extends App {
   val lOps = new ListOps
-  lOps.findLastElement(List(10, 20, 30, 40))
-  lOps.printTable(List(1, 2, 3))
-  lOps.findSum(List(5, 7, 3, 9))
-  lOps.findMultiplication(List(2, 3, 4, 1))
-  lOps.enqueue(List(21, 44, 87, 33), 67)
-  lOps.dequeue(List(21, 44, 87, 33, 67))
-  lOps.push(List(21, 44, 87, 33), 67)
-  lOps.pop(List(21, 44, 87, 33, 67))
+  println(lOps.findLastElement(List(10, 20, 30, 40)))
+  println(lOps.printTable(List(1, 2, 3)))
+  println(lOps.findSum(List(5, 7, 3, 9)))
+  println(lOps.findMultiplication(List(2, 3, 4, 1)))
+  println(lOps.enqueue(List(21, 44, 87, 33), 67))
+  println(lOps.dequeue(List(21, 44, 87, 33, 67)))
+  println(lOps.push(List(21, 44, 87, 33), 67))
+  println(lOps.pop(List(21, 44, 87, 33, 67)))
 }
