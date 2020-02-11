@@ -22,19 +22,19 @@ class StudentReport {
 
   def countNumberOfPassOrFail(subjectId: Int, percentage: Float, passOrFail: String) = {
     if (passOrFail == "pass") {
-      val passStudents = for (i <- marks if i.marksObtained >= percentage) yield i.marksObtained
+      val passStudents = for (i <- marks if i.marksObtained >= percentage & i.subjectId == subjectId) yield i.marksObtained
       passStudents.length
     }
     else {
-      val failStudents = for (i <- marks if i.marksObtained < percentage) yield i.marksObtained
+      val failStudents = for (i <- marks if i.marksObtained < percentage & i.subjectId == subjectId) yield i.marksObtained
       failStudents.length
     }
   }
 
   def topOrBottomMarks(subjectId: Int, count: Int, topOrBottom: String) = {
-    val studentRecord = for (i <- marks; j <- students if i.subjectId == subjectId & i.studentId == j.id) yield j.name -> i.marksObtained
+    val studentRecord = for (i <- marks; j <- students if i.subjectId == subjectId & i.studentId == j.id) yield i.marksObtained -> j.name
     if (topOrBottom == "top") {
-      studentRecord.sorted(Ordering[(String, Float)].reverse).slice(0, count)
+      studentRecord.sorted(Ordering[(Float, String)].reverse).slice(0, count)
     }
     else {
       studentRecord.sorted.slice(0, count)
@@ -45,36 +45,45 @@ class StudentReport {
     marks.filter(_.studentId == student.id).map(_.marksObtained).sum / 5
   }
 
-  def topOrBottomPercentage(top: String, count: Int) = {
+  def topOrBottomPercentage(topOrBottom: String, count: Int) = {
     val percentages = students.map(calculatePercentage)
     val names = students.map(_.name)
-    val studentsRecord = percentages zip names
-    studentsRecord.sorted(Ordering[(Float, String)].reverse).slice(0, count)
+    val studentsRecord = names zip percentages
+    if (topOrBottom == "top") {
+      studentsRecord.sorted(Ordering[(String, Float)].reverse).slice(0, count)
+    }
+    else {
+      studentsRecord.sorted.slice(0, count)
+    }
   }
 
   def getScholarship(percentage: Float, goodScholarship: Int, normalOrNoScholarship: Int) = {
     val percentages = students.map(calculatePercentage)
     val names = students.map(_.name)
-    val goodScholarshipOutput = percentages.filter(_ >= percentage) zip names
-    val normalOrNoScholarshipOutput = percentages.filter(_ < percentage) zip names
+    val goodScholarshipOutput = names zip percentages.filter(_ >= percentage)
+    val normalOrNoScholarshipOutput = names zip percentages.filter(_ < percentage)
     List(goodScholarshipOutput, normalOrNoScholarshipOutput)
   }
 
-  def getStudentsPassOrFail(pass: String, percentage: Float) = {
+  def getStudentsPassOrFail(passOrFail: String, percentage: Float) = {
     val percentages = students.map(calculatePercentage)
     val names = students.map(_.name)
-    if (pass == "pass") {
-      percentages.filter(_ < percentage) zip names
+    if (passOrFail == "pass") {
+      names zip percentages.filter(_ >= percentage)
     }
     else {
-      percentages.filter(_ >= percentage) zip names
+      names zip percentages.filter(_ < percentage)
     }
   }
 
   def getStudentsAbovePercentage(percentage: Float) = {
     val percentages = students.map(calculatePercentage)
     val names = students.map(_.name)
-    percentages.filter(_ >= percentage) zip names
+    names zip percentages.filter(_ >= percentage)
+  }
+
+  def calc(stu: Student) = {
+    marks.filter(_.studentId == stu.id).map(_.marksObtained)
   }
 
   def studentReportCard() = {
@@ -92,7 +101,7 @@ object StudentReport extends App {
   println(stuReport.topOrBottomPercentage("bottom", 3))
   println(stuReport.getScholarship(85, 2000, 500))
   println(stuReport.getStudentsPassOrFail("fail", 40))
-  println(stuReport.getStudentsAbovePercentage(95))
+  println(stuReport.getStudentsAbovePercentage(90))
   println(stuReport.studentReportCard())
 }
 
