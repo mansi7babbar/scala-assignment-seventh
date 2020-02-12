@@ -82,14 +82,19 @@ class StudentReport {
     names zip percentages.filter(_ >= percentage)
   }
 
-  def calc(stu: Student) = {
-    marks.filter(_.studentId == stu.id).map(_.marksObtained)
-  }
-
   def studentReportCard() = {
-    val percentages = students.map(calculatePercentage)
-    val names = students.map(_.name)
-    names zip percentages
+    val studentRecord = marks.groupBy(_.studentId).map {
+      case (x, y) => for {
+        z <- students
+        if x == z.id
+      } yield {
+        z.name -> y
+      }
+    }.flatten.toMap
+    studentRecord.foldLeft(Map.empty[String, List[Float]]) { (studentReport, mapElement) =>
+      val marks = mapElement._2.map(_.marksObtained)
+      studentReport + (mapElement._1 -> marks)
+    }
   }
 
 }
