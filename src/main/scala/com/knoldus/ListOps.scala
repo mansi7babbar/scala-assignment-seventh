@@ -21,6 +21,10 @@ class ListOps {
     element zip tableOfEachElement
   }
 
+  def aggregateLists(list1: List[Int], list2: List[String]) = {
+    list1 zip list2
+  }
+
   def findSum(list: List[Int]) = {
     @scala.annotation.tailrec
     def findSumRecursive(list: List[Int], sum: Int): Int = {
@@ -69,6 +73,7 @@ object ListOps extends App {
   val lOps = new ListOps
   println(lOps.findLastElement(List(10, 20, 30, 40)))
   println(lOps.printTable(List(1, 2, 3)))
+  println(lOps.aggregateLists(List(1,2,3), List("a", "b", "c")))
   println(lOps.findSum(List(5, 7, 3, 9)))
   println(lOps.findMultiplication(List(2, 3, 4, 1)))
   println(lOps.enqueue(List(21, 44, 87, 33), 67))
